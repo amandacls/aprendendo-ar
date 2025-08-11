@@ -28,24 +28,32 @@
   }
 </style>
 
-
 <body>
-  <a-scene
-    mindar-image="imageTargetSrc: ./targets.mind"    
-    vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" embedded>
+  <a-scene mindar-image="imageTargetSrc: ./targets.mind" vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false" embedded>
+
     <a-assets>
       <a-asset-item id="model" src="./eolico.gltf"></a-asset-item>
     </a-assets>
 
-    <a-camera position="0 0 0" look-controls="enabled: false" mindar-camera="active: true"></a-camera>
+    <a-camera position="0 1.6 0" look-controls="enabled: false" mindar-camera="active: true" cursor="rayOrigin: mouse"></a-camera>
 
-    <a-entity mindar-image-target="targetIndex: 0">
-      <a-gltf-model src="#model" position="0 0 0" rotation="0 0 0" scale="0.1 0.1 0.1"></a-gltf-model>
-    </a-entity>
+    <a-gltf-model id="meuModelo" src="#model" position="0 0.5 -1" rotation="0 0 0" scale="0.2 0.2 0.2"
+      event-set__enter="_event: mouseenter; material.color: #24CAFF"
+      event-set__leave="_event: mouseleave; material.color: #FFF" class="clickable">
+    </a-gltf-model>
+
+    <script>
+      const modelo = document.querySelector('#meuModelo');
+      let rotacaoAtual = 0;
+
+      modelo.addEventListener('click', () => {
+        rotacaoAtual += 90;
+        modelo.setAttribute('rotation', `0 ${rotacaoAtual} 0`);
+      });
+    </script>
+
   </a-scene>
-
-
 </body>
-
 
 </html>
